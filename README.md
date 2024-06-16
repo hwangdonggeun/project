@@ -1,1 +1,1 @@
-<img src="score.png">
+#기말고사 프로젝트
