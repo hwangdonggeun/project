@@ -82,7 +82,7 @@ recommend_course_dl_only는 딥러닝 모델을 사용하여 랜덤 입력값을
 
 ![image](https://github.com/user-attachments/assets/933b35c2-b81a-49f7-988a-ace21dac266d)
 
-
+대주제로 관람, 한식이 딥러닝의 추천 결과로 나왔는데 여자친구가 가장 많이 선호하는게 관람, 한식으로 일치하였다. 실제로 여자친구가 매우 좋아해서 학습시킬수록 더 사용가치가 높아질 것 같다고 생각한다.
 
 
 # 소감 작성
