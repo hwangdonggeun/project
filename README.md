@@ -14,7 +14,7 @@ pykrx 라이브러리를 활용하여 KOSPI·KOSDAQ 종목의 일별 OHLCV 또�
 
 실시간 감지를 위해 get_last_trading_date()로 주말이나 휴장일을 건너뛰어 가장 최근 거래일을 파악한 뒤, 다시 load_returns()로 해당 거래일 수익률을 가져왔다. 이 수익률을 detect_joint_extreme() 함수에 넘겨 “모니터링 대상 모든 종목이 동시에 과거 하위 임계치 이하로 떨어졌는가”를 논리 연산으로 확인하였고, 이 함수가 True를 반환하면 즉시 send_email()을 호출하여 미리 설정된 발신자·수신자 이메일로 경고 메시지를 전송하였다.
 
-send_email 함수에서는 메시지의 Subject, From, To 헤더를 각각 설정하였다. smtplib.SMTP로 smtp.gmail.com 서버에 접속한다. starttls() 메서드로 TLS 보안 채널을 시작하고 login() 메서드로 발신자 계정과 앱 비밀번호를 인증하고 send_message() 메서드로 이메일 메시지를 전송하였다. quit() 메서드로 SMTP 세션을 종료하여 연결을 닫았다.
+send_email 함수에서는 메시지의 Subject, From, To 헤더를 각각 설정하였다. smtplib.SMTP로 smtp.gmail.com 서버에 접속한다. starttls() 메서드로 TLS 보안 채널을 시작하고 login() 메서드로 발신자 계정과 앱 비밀번호를 인증하고 send_message() 메서드로 이메일 메시지를 전송하였다. quit() 메서드로 SMTP 세션을 종료하여 연결을 닫았다. 이를 위해 구글 계정에서 앱 비밀번호 16자리를 설정하였고 이 앱 비밀번호와 계정을 통해 메일을 발송하는 아이디어를 사용하였다.
 
 여기에 더해 was_sent()와 mark_sent() 로직을 통해 sent_dates.txt 파일에 발송 날짜를 기록·확인하도록 구현하였다. 알림을 보낼 때마다 해당 날짜(YYYYMMDD)를 파일에 남기고, 다음 실행 시 해당 날짜가 이미 존재하면 중복 발송을 건너뛰어 불필요한 중복 알림을 방지하였다.
 
@@ -22,6 +22,9 @@ send_email 함수에서는 메시지의 Subject, From, To 헤더를 각각 설�
 
 # 퍼포먼스
 Quantile을 1로 설정하고 변동성이 큰 KOSDAQ 중소형주(예: 펄어비스)를 모니터링한 결과, 경고가 발생하였다. 이 시스템은 단일 룰 기반 모델임에도 불구하고, 분위수 파라미터 조정만으로 알림 빈도와 민감도를 쉽게 제어할 수 있음을 확인하였다.
+
+결과는 다음과 같다. 
+
 ![image](https://github.com/user-attachments/assets/f2953bb3-11f1-40b4-ab5b-adc6f5b3d595)
 
 ![image](https://github.com/user-attachments/assets/b569d48b-e805-446d-9c6a-e1854dc90410)
